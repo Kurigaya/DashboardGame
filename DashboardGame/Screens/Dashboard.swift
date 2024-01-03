@@ -34,10 +34,8 @@ struct Dashboard: View {
                             //2nd game
                         NavigationLink(destination: FourInRowGame(gameCounter: gameCounter)){
                                     gameItem(by: Image("fourinrowIcon"), text: Text("Four in row"))
-                        }.onTapGesture {
-                            gameCounter.playGame("four")
                         }
-                        
+
                             //3rd game
                             NavigationLink(destination: MemoryGameView(viewModel: GameViewModel(), gameCounter: gameCounter)){
                                     gameItem(by: Image("memoryIcon"), text: Text("Memorize"))
@@ -98,7 +96,7 @@ struct Dashboard: View {
                 }
                 showdate()
                 HStack{
-                    Text("Score : ")
+                    Text("Game played : ")
                         .font(.system(size: 20, weight: .semibold, design: .rounded))
                         .foregroundColor(Color("color-alter"))
                         .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
@@ -122,7 +120,7 @@ struct Dashboard: View {
     var bar_scoreTotal: some View {
     
             HStack{
-                Text("Score Total : \(gameCounter.getTotal()) Point")
+                Text("Played total: \(gameCounter.getTotal())")
                     .font(.system(size: 20, weight: .semibold, design: .rounded))
                     .foregroundColor(.white)
                     .layoutPriority(1)
@@ -137,50 +135,20 @@ struct Dashboard: View {
         }
     
     //Score Game
-    var played1 = 1//gameCount.getCount(forGame: "tic")
-    var played2 = 30
-    var played3 = 30
-
-
-    //data dianary score
-
-//    struct ValuePerCategory{
-//        var Category: String
-//        var value: Int
-//    }
-
-//    let data: [ValuePerCategory] = [
-//        .init(Category: "Tic Tac Toe", value: gameCounter.getCount(forGame: "tic")),
-//        .init(Category: "4 in Row", value: 2),
-//        .init(Category: "Memorize", value: 3)
-//    ]
-    
-
-    //Score Game
     var chart_score_game: some View {
-        
-        //            Chart(data, id: \.Category){ item in
-        //                BarMark(
-        //                    x: .value("game", item.Category),
-        //                    y: .value("score", item.value)
-        //                )
-        //                .foregroundStyle(Color("color-primary").opacity(0.8))
-        //            }
-        //            .background(Color("color-tertary").opacity(0.5))
-        //            .clipShape(Rectangle())
-        //            .cornerRadius(15)
-        //            .padding()
-        
-        Chart {
-            if #available(iOS 17.0, *) {
-                ForEach(Array(gameCounter.gameCounts), id: \.key) { game, value in
-                    SectorMark(
-                        angle: .value("Played", Double(value)),
-                        angularInset: 2.0
-                    )
-                    .foregroundStyle(by: .value("Game", game))
+        ZStack{
+            Chart {
+                if #available(iOS 17.0, *) {
+                    ForEach(Array(gameCounter.gameCounts), id: \.key) { game, value in
+                        SectorMark(
+                            angle: .value("Played", Double(value)),
+                            angularInset: 2.0
+                        )
+                        .foregroundStyle(by: .value("Game", game))
+                    }
                 }
             }
+            Text(gameCounter.getTotal() == 0 ? "No Any Game ..." : "")
         }
     }
 }
