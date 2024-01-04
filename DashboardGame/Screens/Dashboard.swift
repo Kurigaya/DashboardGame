@@ -108,7 +108,7 @@ struct Dashboard: View {
                 bar_scoreTotal
                 chart_score_game
                     .aspectRatio(4/3, contentMode: .fill)
-                
+                score_game
 
             }
             .background(Color("color-secondary"))
@@ -150,6 +150,35 @@ struct Dashboard: View {
             }
             Text(gameCounter.getTotal() == 0 ? "No Any Game ..." : "")
         }
+    }
+    
+    var score_game: some View {
+        VStack {
+            HStack {
+                Text("Tic Tac Toe : \(gameCounter.getCount(forGame: "tic"))")
+            }
+            .frame(width: 150, height: 50)
+            .background(Color("color-primary").opacity(0.5))
+            .clipShape(Rectangle())
+            .cornerRadius(15)
+            
+            HStack {
+                Text("Four in row : \(gameCounter.getCount(forGame: "four"))")
+            }
+            .frame(width: 150, height: 50)
+            .background(Color("color-primary").opacity(0.5))
+            .clipShape(Rectangle())
+            .cornerRadius(15)
+            
+            HStack {
+                Text("Memorize : \(gameCounter.getCount(forGame: "mem"))")
+            }
+            .frame(width: 150, height: 50)
+            .background(Color("color-primary").opacity(0.5))
+            .clipShape(Rectangle())
+            .cornerRadius(15)
+        }
+        .padding()
     }
 }
 
